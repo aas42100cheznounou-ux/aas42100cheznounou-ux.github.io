@@ -696,22 +696,22 @@
     <p style="color:var(--beige-mid);font-size:13.5px;line-height:2;font-weight:300;margin-top:-16px;margin-bottom:8px;">
       見学のご希望・入園に関するご質問など、お気軽にお問い合わせください。
     </p>
-    <form class="contact-form" onsubmit="handleSubmit(event)">
+    <form class="contact-form" action="https://formspree.io/f/mgogbzev" method="POST" onsubmit="handleSubmit(event)">
       <div class="form-group">
         <label>お名前 *</label>
-        <input type="text" placeholder="山田 花子" required="">
+        <input type="text" name="name" placeholder="山田 花子" required="">
       </div>
       <div class="form-group">
         <label>メールアドレス *</label>
-        <input type="email" placeholder="example@mail.com" required="">
+        <input type="email" name="email" placeholder="example@mail.com" required="">
       </div>
       <div class="form-group">
         <label>お電話番号</label>
-        <input type="tel" placeholder="090-0000-0000">
+        <input type="tel" name="phone" placeholder="090-0000-0000">
       </div>
       <div class="form-group">
         <label>お問い合わせ内容</label>
-        <select>
+        <select name="inquiry_type">
           <option value="">選択してください</option>
           <option>2026年度入園について</option>
           <option>見学のご希望</option>
@@ -721,7 +721,7 @@
       </div>
       <div class="form-group">
         <label>メッセージ</label>
-        <textarea placeholder="ご質問・ご要望をご記入ください"></textarea>
+        <textarea name="message" placeholder="ご質問・ご要望をご記入ください"></textarea>
       </div>
       <button type="submit" class="form-submit">送　信</button>
     </form>
@@ -750,11 +750,11 @@
   // Form submit
   function handleSubmit(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('.form-submit');
-    btn.textContent = '送信しました ✓';
+    const form = e.target; const btn = form.querySelector('.form-submit'); const data = new FormData(form);
+    fetch(form.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } }).then(function(response){ if (response.ok) { btn.textContent = '送信しました ✓';
     btn.style.background = '#8b6348';
     btn.style.color = '#fff';
-    btn.disabled = true;
+    btn.disabled = true; form.reset(); } else { alert('送信に失敗しました。しばらくしてから再度お試しください。'); } }).catch(function(){ alert('送信に失敗しました。しばらくしてから再度お試しください。'); });
   }
 </script>
 
